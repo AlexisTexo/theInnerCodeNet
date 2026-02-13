@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/icono1.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>theinnercodenet</title>
+    <script>
+      (function () {
+        var LANGUAGE_CACHE_KEY = 'theinnercode_language';
+        var VALID_LANGUAGES = { es: true, en: true };
+        var SPANISH_TLDS = {
+          ar: true,
+          bo: true,
+          cl: true,
+          co: true,
+          cr: true,
+          cu: true,
+          do: true,
+          ec: true,
+          es: true,
+          gt: true,
+          hn: true,
+          mx: true,
+          ni: true,
+          pa: true,
+          pe: true,
+          pr: true,
+          py: true,
+          sv: true,
+          uy: true,
+          ve: true,
+        };
+
+        function isSpanishFromBrowser() {
+          var langs = [];
+          if (Array.isArray(navigator.languages) && navigator.languages.length > 0) {
+            langs = navigator.languages;
+          } else if (navigator.language) {
+            langs = [navigator.language];
+          }
+
+          for (var i = 0; i < langs.length; i += 1) {
+            if (String(langs[i]).toLowerCase().indexOf('es') === 0) {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        function isSpanishFromDomain() {
+          var hostname = String(window.location.hostname || '').toLowerCase();
+          if (!hostname) return false;
+          var parts = hostname.split('.');
+          var tld = parts[parts.length - 1] || '';
+          return Boolean(SPANISH_TLDS[tld]);
+        }
+
+        function detectLanguage() {
+          var cached = null;
+          try {
+            cached = localStorage.getItem(LANGUAGE_CACHE_KEY);
+          } catch (error) {
+            cached = null;
+          }
+
+          if (cached && VALID_LANGUAGES[cached]) {
+            return cached;
+          }
+
+          return isSpanishFromBrowser() || isSpanishFromDomain() ? 'es' : 'en';
+        }
+
+        var language = detectLanguage();
+
+        try {
+          localStorage.setItem(LANGUAGE_CACHE_KEY, language);
+        } catch (error) {
+          // noop
+        }
+
+        document.documentElement.lang = language;
+        window.__THEINNERCODE_LANG__ = language;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
