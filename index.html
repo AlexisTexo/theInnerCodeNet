@@ -4,32 +4,83 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/icono1.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>theinnercodenet</title>
+    <title>The InnerCode Co. | The Science of the Inner World</title>
+    <meta
+      name="description"
+      content="The InnerCode Co. builds proprietary systems for inner-world navigation. The Inner Blueprint Profile integrates Jungian archetypal modeling, nervous system science, and dynamic psychometrics."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://theinnercode.net/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The InnerCode Co." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_MX" />
+    <meta property="og:title" content="The InnerCode Co. | The Science of the Inner World" />
+    <meta
+      property="og:description"
+      content="The InnerCode Co. builds proprietary systems for inner-world navigation. The Inner Blueprint Profile integrates Jungian archetypal modeling, nervous system science, and dynamic psychometrics."
+    />
+    <meta property="og:url" content="https://theinnercode.net/" />
+    <meta property="og:image" content="https://theinnercode.net/og-innera-1200x630.png" />
+    <meta property="og:image:secure_url" content="https://theinnercode.net/og-innera-1200x630.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The InnerCode Co. and Innera brand preview" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The InnerCode Co. | The Science of the Inner World" />
+    <meta
+      name="twitter:description"
+      content="The InnerCode Co. builds proprietary systems for inner-world navigation. The Inner Blueprint Profile integrates Jungian archetypal modeling, nervous system science, and dynamic psychometrics."
+    />
+    <meta name="twitter:image" content="https://theinnercode.net/og-innera-1200x630.png" />
+    <meta name="twitter:image:alt" content="The InnerCode Co. and Innera brand preview" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "The InnerCode Co.",
+        "alternateName": "theinnercode.net",
+        "url": "https://theinnercode.net/",
+        "logo": "https://theinnercode.net/logo_theinnercode.png",
+        "image": "https://theinnercode.net/og-innera-1200x630.png",
+        "description": "The InnerCode Co. builds proprietary systems for inner-world navigation through the Inner Blueprint Profile and INNERA.",
+        "email": "info@theinnercode.net",
+        "brand": {
+          "@type": "Brand",
+          "name": "Innera",
+          "url": "https://innera.theinnercode.net/"
+        },
+        "knowsAbout": [
+          "Inner Blueprint Profile",
+          "Jungian archetypal modeling",
+          "Nervous system science",
+          "Dynamic psychometrics",
+          "Inner-world navigation"
+        ]
+      }
+    </script>
+
+    <!-- Google Fonts: Lato (primary) + Libre Baskerville (display/titles) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,700;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+
     <script>
       (function () {
         var LANGUAGE_CACHE_KEY = 'theinnercode_language';
         var VALID_LANGUAGES = { es: true, en: true };
         var SPANISH_TLDS = {
-          ar: true,
-          bo: true,
-          cl: true,
-          co: true,
-          cr: true,
-          cu: true,
-          do: true,
-          ec: true,
-          es: true,
-          gt: true,
-          hn: true,
-          mx: true,
-          ni: true,
-          pa: true,
-          pe: true,
-          pr: true,
-          py: true,
-          sv: true,
-          uy: true,
-          ve: true,
+          ar: true, bo: true, cl: true, co: true, cr: true, cu: true,
+          do: true, ec: true, es: true, gt: true, hn: true, mx: true,
+          ni: true, pa: true, pe: true, pr: true, py: true, sv: true,
+          uy: true, ve: true,
         };
 
         function isSpanishFromBrowser() {
@@ -39,11 +90,8 @@
           } else if (navigator.language) {
             langs = [navigator.language];
           }
-
           for (var i = 0; i < langs.length; i += 1) {
-            if (String(langs[i]).toLowerCase().indexOf('es') === 0) {
-              return true;
-            }
+            if (String(langs[i]).toLowerCase().indexOf('es') === 0) return true;
           }
           return false;
         }
@@ -58,27 +106,13 @@
 
         function detectLanguage() {
           var cached = null;
-          try {
-            cached = localStorage.getItem(LANGUAGE_CACHE_KEY);
-          } catch (error) {
-            cached = null;
-          }
-
-          if (cached && VALID_LANGUAGES[cached]) {
-            return cached;
-          }
-
+          try { cached = localStorage.getItem(LANGUAGE_CACHE_KEY); } catch (e) { cached = null; }
+          if (cached && VALID_LANGUAGES[cached]) return cached;
           return isSpanishFromBrowser() || isSpanishFromDomain() ? 'es' : 'en';
         }
 
         var language = detectLanguage();
-
-        try {
-          localStorage.setItem(LANGUAGE_CACHE_KEY, language);
-        } catch (error) {
-          // noop
-        }
-
+        try { localStorage.setItem(LANGUAGE_CACHE_KEY, language); } catch (e) {}
         document.documentElement.lang = language;
         window.__THEINNERCODE_LANG__ = language;
       })();

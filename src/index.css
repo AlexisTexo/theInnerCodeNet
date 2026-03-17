@@ -1,13 +1,87 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THE INNER CODE — Design System Tokens
+   Brand guide: CLAUDE.md
+   ============================================================ */
+
 :root {
-  font-family: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* ── Fonts ─────────────────────────────────────────────── */
+  --font-primary: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Libre Baskerville', Georgia, serif;
+
+  /* ── Font weights ───────────────────────────────────────── */
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-bold:    700;
+  --fw-black:   900;
+
+  /* ── Tracking (letter-spacing) ──────────────────────────── */
+  --tracking-titles: -0.01em;   /* −10 tracking (headlines) */
+  --tracking-ui:      0.05em;   /* buttons / nav labels     */
+  --tracking-normal:  0;        /* body copy                */
+
+  /* ── Primary neutrals ───────────────────────────────────── */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* ── Brand accent colors ────────────────────────────────── */
+  --color-pastel-orange:       #FDB360;
+  --color-pumpkin:             #FE8851;
+  --color-persimmon:           #FE5740;
+  --color-amethyst:            #A36BDA;
+  --color-light-royal-purple:  #6751C4;
+  --color-mirror-blue:         #2D72FF;
+  --color-neon-teal:           #00B3BD;
+  --color-emerald:             #52DF83;
+
+  /* ── Secondary grays ────────────────────────────────────── */
+  --color-gray-dark:  #4C4C4C;
+  --color-gray-mid:   #7F7F7F;
+  --color-gray-light: #CCCCCC;
+
+  /* ── Tonal / pastel variants ────────────────────────────── */
+  --color-pastel-orange-2: #FDC280;
+  --color-pumpkin-2:       #FEA074;
+  --color-persimmon-2:     #FE7966;
+  --color-amethyst-2:      #B589E1;
+  --color-royal-purple-2:  #8574D0;
+  --color-mirror-blue-2:   #578EFF;
+  --color-neon-teal-2:     #33C2CA;
+  --color-emerald-2:       #75E59C;
+
+  /* ── Semantic aliases ───────────────────────────────────── */
+  --color-bg:          var(--color-white);
+  --color-bg-dark:     var(--color-black);
+  --color-text:        var(--color-black);
+  --color-text-muted:  var(--color-gray-mid);
+  --color-text-invert: var(--color-white);
+  --color-accent-1:    var(--color-pumpkin);
+  --color-accent-2:    var(--color-mirror-blue);
+  --color-accent-3:    var(--color-emerald);
+
+  /* ── User palette aliases ───────────────────────────────── */
+  --paper: #000000;
+  --ink: #f5f5f5;
+  --sandy: #feb360;
+  --coral: #ff8752;
+  --tomato: #fd573f;
+  --emerald: #52df83;
+  --teal: #01b3bd;
+  --blue: #2e73ff;
+  --violet: #6851c5;
+  --lavender: #a36bda;
 }
 
-* {
+/* ── Base resets ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -21,4 +95,12 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-regular);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
