@@ -1,5 +1,12 @@
-import React from 'react'
 import './App.css'
+import {
+  detectLanguageFromPath,
+  getAlternateHref,
+  getAlternateLanguage,
+  getBasePath,
+  getSectionHref,
+  normalizeLanguage,
+} from './site.js'
 
 /* ── Bilingual copy ─────────────────────────────────────────── */
 const copy = {
@@ -171,9 +178,9 @@ function LogoMark({ size = 40 }) {
 }
 
 /* ── Wordmark (logo mark + text) ────────────────────────────── */
-function Wordmark({ dark = false }) {
+function Wordmark({ dark = false, href = '/' }) {
   return (
-    <a href="/" className={`wordmark ${dark ? 'wordmark--dark' : ''}`} aria-label="The Inner Code">
+    <a href={href} className={`wordmark ${dark ? 'wordmark--dark' : ''}`} aria-label="The Inner Code">
       <img 
         src="/logo_theinnercode_1.png" 
         alt="The Inner Code" 
@@ -188,17 +195,32 @@ function DisplayAccent({ children, className = '' }) {
 }
 
 /* ── Navbar ─────────────────────────────────────────────────── */
-function Navbar({ nav }) {
+function Navbar({ nav, language }) {
+  const alternateLanguage = getAlternateLanguage(language)
+  const alternateHref = getAlternateHref(language)
+  const homeHref = getBasePath(language)
+
   return (
     <header className="navbar">
-      <Wordmark />
+      <Wordmark href={homeHref} />
       <nav className="navbar__links" role="navigation" aria-label="Main navigation">
-        <a href="#hero" className="nav-link">{nav.home}</a>
-        <a href="#about" className="nav-link">{nav.about}</a>
-        <a href="#methodology" className="nav-link">{nav.methodology}</a>
-        <a href="#innera" className="nav-link">{nav.innera}</a>
+        <a href={getSectionHref(language, 'hero')} className="nav-link">{nav.home}</a>
+        <a href={getSectionHref(language, 'about')} className="nav-link">{nav.about}</a>
+        <a href={getSectionHref(language, 'methodology')} className="nav-link">{nav.methodology}</a>
+        <a href={getSectionHref(language, 'innera')} className="nav-link">{nav.innera}</a>
       </nav>
-      <a href="#contact" className="btn-primary btn-sm">{nav.contact}</a>
+      <div className="navbar__actions">
+        <a
+          href={alternateHref}
+          className="lang-switch"
+          lang={alternateLanguage}
+          hrefLang={alternateLanguage}
+          aria-label={language === 'es' ? 'Cambiar idioma a inglés' : 'Switch language to Spanish'}
+        >
+          {alternateLanguage.toUpperCase()}
+        </a>
+        <a href={getSectionHref(language, 'contact')} className="btn-primary btn-sm">{nav.contact}</a>
+      </div>
     </header>
   )
 }
@@ -260,11 +282,13 @@ function Section({ id, title, eyebrow, children, dark = false, wide = false }) {
 
 /* ── Footer ─────────────────────────────────────────────────── */
 function SiteFooter({ nav, footer, language }) {
+  const homeHref = getBasePath(language)
+
   return (
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <Wordmark />
+          <Wordmark href={homeHref} />
           <p className="footer__tagline">
             {language === 'es' ? (
               <>
@@ -278,11 +302,11 @@ function SiteFooter({ nav, footer, language }) {
           </p>
         </div>
         <nav className="footer__nav" aria-label="Footer navigation">
-          <a href="#hero" className="nav-link">{nav.home}</a>
-          <a href="#about" className="nav-link">{nav.about}</a>
-          <a href="#methodology" className="nav-link">{nav.methodology}</a>
-          <a href="#innera" className="nav-link">{nav.innera}</a>
-          <a href="#contact" className="nav-link">{nav.contact}</a>
+          <a href={getSectionHref(language, 'hero')} className="nav-link">{nav.home}</a>
+          <a href={getSectionHref(language, 'about')} className="nav-link">{nav.about}</a>
+          <a href={getSectionHref(language, 'methodology')} className="nav-link">{nav.methodology}</a>
+          <a href={getSectionHref(language, 'innera')} className="nav-link">{nav.innera}</a>
+          <a href={getSectionHref(language, 'contact')} className="nav-link">{nav.contact}</a>
         </nav>
         <p className="footer__copyright">{footer.copyright}</p>
       </div>
@@ -291,13 +315,13 @@ function SiteFooter({ nav, footer, language }) {
 }
 
 /* ── App ────────────────────────────────────────────────────── */
-function App() {
-  const language = window.__THEINNERCODE_LANG__ === 'es' ? 'es' : 'en'
-  const c = copy[language]
+function App({ language = detectLanguageFromPath(typeof window === 'undefined' ? '/' : window.location.pathname) }) {
+  const currentLanguage = normalizeLanguage(language)
+  const c = copy[currentLanguage]
 
   return (
     <>
-      <Navbar nav={c.nav} />
+      <Navbar nav={c.nav} language={currentLanguage} />
       <main>
         <HeroSection hero={c.hero} />
 
@@ -427,7 +451,7 @@ function App() {
           </div>
         </Section>
       </main>
-      <SiteFooter nav={c.nav} footer={c.footer} language={language} />
+      <SiteFooter nav={c.nav} footer={c.footer} language={currentLanguage} />
     </>
   )
 }
